@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>SafeSpace | Mental Support & Community</title>
+  <style>
+    :root {
+      --primary: #5d9e9e;
+      --accent: #ff9f1c;
+      --bg1: #e6f7f7;
+      --bg2: #fef6e4;
+      --text: #333;
+      --card: #fff;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; font-family: var(--font);}
+    body {
+      background: linear-gradient(120deg, var(--bg1), var(--bg2));
+      min-height: 100vh; color: var(--text); margin: 0; overflow-x:hidden; position: relative;
+    }
+    /* Animated and fixed graphics for visual appeal */
+    .bg-svg, .bg-svg2 {
+      position: fixed; width: 100vw; left: 0;
+      z-index: 0; pointer-events: none; filter: blur(1px) brightness(0.97);
+    }
+    .bg-svg.top { top: 0;}
+    .bg-svg.bottom { bottom: -30px; transform: scaleY(-1);}
+    .bg-svg2 { top: 36vh; left:0; width:100vw; opacity:.13;}
+    .petal {
+      position:absolute; z-index:1; width:40px; opacity:.38; pointer-events:none; top:0; left:0; animation: fall 11s linear infinite;
+      filter: blur(0.3px) brightness(1.2);
+    }
+    .petal2 {left:17vw; animation-delay:1.2s;}
+    .petal3 {left:35vw; animation-delay:2.3s;}
+    .petal4 {left:58vw; animation-delay:3.8s;}
+    .petal5 {left:82vw; animation-delay:6.2s;}
+    @keyframes fall {
+      0% {top:-60px; transform:translateX(0) scale(0.9) rotate(-7deg);}
+      30% {transform:translateX(-7vw) scale(1.04) rotate(14deg);}
+      44% {transform:translateX(-3vw) scale(0.92) rotate(-6deg);}
+      77% {transform:translateX(0vw) scale(1.07);}
+      100% {top:100vh; transform:translateX(8vw) scale(1.18) rotate(24deg);}
+    }
+    /* Decorative section images */
+    .section-img {
+      width:100px;
+      border-radius:50%;
+      margin-bottom:10px;
+      box-shadow:0 2px 8px #2221;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .icon-row { display:flex; justify-content: center; gap:16px; margin:12px 0 0 0;}
+    .icon-row img { width:48px; height:48px; transition:transform 0.28s; border-radius:12px;}
+    .icon-row img:hover { transform:scale(1.18);}
+    header {
+      background: var(--card); display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 5; position: relative;
+    }
+    .logo {
+      font-size: 1.8rem; font-weight: bold; color: var(--primary); text-decoration: none; letter-spacing:2px;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform:translateY(0);} 50% { transform:translateY(-7px); } }
+    nav a {
+      margin-left: 1rem; padding: .5rem 1rem; text-decoration: none; color: var(--text); border-radius: 6px; font-weight: 500; transition: 0.3s;
+    }
+    nav .active, nav a:hover { background: var(--primary); color: white; }
+    nav .auth-btn {
+      background: var(--accent); color: #fff; margin-left: 1.5rem; border-radius: 7px; font-weight: bold;  border:none; cursor:pointer; padding:.5rem 1.2rem; transition:0.3s;
+    }
+    nav .auth-btn:hover { background: #d28617; }
+    .hero {
+      position: relative; height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=80') center/cover;
+      border-bottom: 4px solid var(--accent); box-shadow:0 5px 16px rgba(0,0,0,0.08); z-index:3; overflow:hidden;
+    }
+    .hero::before {
+      content:""; position:absolute;width:100%;height:100%;left:0;top:0; background:rgba(0,0,0,0.33); z-index:0;
+    }
+    .hero h1 {
+      font-size: 3rem; z-index:2; margin-bottom:0.8rem;
+      background: linear-gradient(90deg,#ff9f1c,#00b4d8,#5d9e9e,#222,#9b5de5,#111);
+      background-size: 600% 600%; background-clip: text; -webkit-background-clip: text; color: transparent;
+      -webkit-text-stroke:2px rgba(255,255,255,0.02); text-shadow:0 2px 8px rgba(0,0,0,0.18);
+      animation: heroColor 5s linear infinite alternate, heroFadeToBlack 2.2s 5.5s forwards;
+    }
+    @keyframes heroColor {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    @keyframes heroFadeToBlack {0%{color:transparent;background:linear-gradient(90deg,#ff9f1c,#00b4d8,#5d9e9e,#222,#9b5de5,#111);}
+      100%{color:#111;background:none;-webkit-background-clip:unset;background-clip:unset;}}
+    .hero p { font-size: 1.2rem; margin-top: 1rem; color: #fff; z-index:2; animation:fadeIn 2s;}
+    @keyframes fadeIn {from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+    main {max-width:900px; margin:2rem auto; padding:0 1rem; z-index:6; position:relative;}
+    section {
+      background: var(--card);padding:2rem 1.5rem;border-radius:14px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.10);margin-bottom:2rem;
+      animation: fadeIn 1.3s;
+    }
+    h2 {color:var(--primary);}
+    .image-card img {width:100%; max-height:240px; object-fit:cover; border-radius:13px; box-shadow:0 2px 12px #9b5de518;}
+    .card {
+      background:#f8fafa; padding:1rem; border-radius:11px; box-shadow:0 2px 6px rgba(0,0,0,0.05); margin-bottom:10px; text-align:left;
+      border-left:5px solid var(--primary); animation: waveIn 0.75s;
+    }
+    @keyframes waveIn {from{transform:translateY(30px); opacity:0;}to{transform:none;opacity:1;}}
+    textarea {width:100%; padding:1rem; border-radius:8px; border:1px solid #ccc; margin-bottom:1rem; resize:vertical;}
+    .btn {
+      background: var(--accent); color: white; border:none; border-radius: 8px;
+      padding: 0.7rem 1.1rem; font-weight: bold; cursor: pointer; transition:0.3s;
+      box-shadow: 0 2px 10px #ffd27f18;
+    }
+    .btn:hover {background: #e68a00;}
+    .breathing-container{text-align:center;}
+    .breathing-circle {
+      width:150px; height:150px; margin:1.5rem auto; border-radius:50%;
+      background:var(--primary);display:flex; align-items:center; justify-content:center;
+      color:white; font-weight: bold; box-shadow:0 0 25px #5d9e9ea2;
+      transition: all 4s cubic-bezier(.27,.54,.47,1.7);
+    }
+    .breathing-circle.grow {transform:scale(1.5); background:#84c7c7;}
+    footer {background: #f4f4f4; color:#666; padding:1rem; text-align:center;}
+    @media (max-width:600px) {.hero h1{font-size:1.4rem;} .hero{height:26vh;}}
+  </style>
+</head>
+<body>
+<!-- Background SVGs and Petals for graphics -->
+<svg class="bg-svg top" viewBox="0 0 1400 120"><path fill="#a8dadc" fill-opacity="0.28" d="M0,50C220,110,440,-30,700,35C960,100,1180,21,1400,55L1400,00L0,0Z"></path></svg>
+<svg class="bg-svg bottom" viewBox="0 0 1400 120"><path fill="#ffb67e" fill-opacity="0.17" d="M0,50C170,90,480,40,700,70C960,100,1280,11,1400,25L1400,120L0,120Z"></path></svg>
+<svg class="bg-svg2" viewBox="0 0 1400 120"><path fill="#9b5de5" fill-opacity="0.11" d="M0,68C150,130,460,20,805,79.5C1160,140,1320,32,1400,56L1400,120L0,120Z"></path></svg>
+<img src="https://i.imgur.com/RSBtG9w.png" class="petal" style="left:7vw;">
+<img src="https://i.imgur.com/RSBtG9w.png" class="petal petal2">
+<img src="https://i.imgur.com/RSBtG9w.png" class="petal petal3">
+<img src="https://i.imgur.com/RSBtG9w.png" class="petal petal4">
+<img src="https://i.imgur.com/RSBtG9w.png" class="petal petal5">
+<!-- Section Decorative Graphics -->
+<img src="https://images.unsplash.com/photo-1465101178521-c3f06cbc2e53?auto=format&fit=crop&w=800&q=80" style="position:fixed;top:28px;right:40px;width:130px;z-index:2;border-radius:16px;box-shadow:0 6px 24px #2221;" alt="Leaves graphic">
+<img src="https://cdn-icons-png.flaticon.com/512/789/789395.png" style="position:fixed;top:54vh;left:28px;width:70px;z-index:2;opacity:.9;animation:float 9s infinite;" alt="Sun icon">
+
+<header>
+  <a href="#" class="logo" onclick="navigateTo('home');return false;">SafeSpace 🕊️</a>
+  <nav>
+    <a href="#" id="nav-home" class="active" onclick="navigateTo('home');return false;">Home</a>
+    <a href="#" id="nav-community" onclick="navigateTo('community');return false;">Community</a>
+    <a href="#" id="nav-journaling" onclick="navigateTo('journaling');return false;">Mood Journal</a>
+    <a href="#" id="nav-tools" onclick="navigateTo('tools');return false;">Tools</a>
+    <a href="#" id="nav-resources" onclick="navigateTo('resources');return false;">Resources</a>
+    <button class="auth-btn" id="signInBtn" onclick="showLoginForm()">Sign In</button>
+    <button class="auth-btn" style="display:none" id="signOutBtn" onclick="logout()">Sign Out</button>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1 id="welcome-title">Welcome to SafeSpace</h1>
+  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" class="section-img" alt="Smiling person">
+  <img src="https://cdn-icons-png.flaticon.com/512/4903/4903794.png" style="width:50px;margin-left:18px;margin-bottom:-32px;" alt="Speech bubble icon">
+  <p>Your calm, caring community for mental wellness 🌸</p>
+</section>
+
+<main>
+  <!-- Sign In Modal -->
+  <section id="login-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99;background:rgba(0,0,0,0.42);justify-content:center;align-items:center;">
+    <form id="loginForm" style="margin:auto;padding:2.5rem 2rem;background:#fff;border-radius:13px;box-shadow:0 8px 25px #5552;max-width:350px;display:flex;flex-direction:column;gap:1.3rem;">
+      <h2 style="margin-bottom:1rem;text-align:center;color:var(--primary)">Sign In</h2>
+      <input id="username" placeholder="Username" style="padding:0.9rem 1rem;border-radius:7px;border:1px solid #bbb;" required>
+      <input id="password" type="password" placeholder="Password" style="padding:0.9rem 1rem;border-radius:7px;border:1px solid #bbb;" required>
+      <button class="btn" type="submit">Sign In</button>
+      <button class="btn" type="button" style="background:#aaa;" onclick="closeLoginForm()">Cancel</button>
+      <div id="login-msg" style="color:crimson;text-align:center;font-size:0.98rem;"></div>
+    </form>
+  </section>
+
+  <!-- Community -->
+  <section id="community" style="display:none;">
+    <h2>💬 Community Forum</h2>
+    <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=800&q=80" class="section-img" alt="Group support">
+    <div class="icon-row">
+      <img src="https://cdn-icons-png.flaticon.com/512/1647/1647767.png" alt="Group icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/1946/1946433.png" alt="Community">
+      <img src="https://cdn-icons-png.flaticon.com/512/2972/2972534.png" alt="Anonymous">
+    </div>
+    <form id="post-form">
+      <textarea id="post-content" placeholder="Share your message anonymously..." maxlength="400" required></textarea>
+      <button type="submit" class="btn">Post</button>
+    </form>
+    <div id="posts-list">
+      <div class="card"><small>Anonymous - Today</small><p>Feeling grateful for this safe space.</p></div>
+    </div>
+  </section>
+
+  <!-- Mood Journal -->
+  <section id="journaling" style="display:none;">
+    <h2>📔 Mood Journal</h2>
+    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" class="section-img" alt="Journaling graphic">
+    <div class="icon-row"><img src="https://cdn-icons-png.flaticon.com/512/2635/2635996.png" alt="Journal icon"></div>
+    <form id="journal-form">
+      <textarea id="journal-content" placeholder="How are you feeling today?" maxlength="400" required></textarea>
+      <button type="submit" class="btn">Save Mood</button>
+    </form>
+    <div id="journal-entries"></div>
+  </section>
+
+  <!-- Guided Breathing tool -->
+  <section id="tools" style="display:none;">
+    <h2>🧘 Guided Breathing</h2>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" class="section-img" alt="Nature meditate">
+    <div class="icon-row"><img src="https://cdn-icons-png.flaticon.com/512/2997/2997928.png" alt="Yoga icon"></div>
+    <div class="breathing-container">
+      <div id="breathing-circle" class="breathing-circle">Ready</div>
+      <button class="btn" onclick="startBreathing()">Start</button>
+    </div>
+  </section>
+
+  <!-- Resources and Emergency contacts -->
+  <section id="resources" style="display:none;">
+    <h2>📚 Resources & Emergency Help</h2>
+    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" class="section-img" alt="Books and help">
+    <div class="icon-row">
+      <img src="https://cdn-icons-png.flaticon.com/512/2089/2089792.png" alt="Phone">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart">
+      <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="Book">
+    </div>
+    <ul style="text-align:left; display:inline-block;">
+      <li>📞 <b>988</b> (US Crisis Lifeline)</li>
+      <li>🇮🇳 <b>+91 9999666555</b> (India 24x7 Mental Health Counselling)</li>
+      <li><a href="https://www.mhanational.org" target="_blank">Mental Health America</a></li>
+      <li><a href="https://www.nami.org" target="_blank">National Alliance on Mental Illness</a></li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>SafeSpace © 2025 | Built for calmness and compassion ✨</p>
+</footer>
+<script>
+let currentUser = null;
+
+function navigateTo(section) {
+  document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  if(document.getElementById('nav-'+section))
+    document.getElementById('nav-'+section).classList.add('active');
+  if (section === 'home') document.querySelector('.hero').style.display = 'flex';
+  else {
+    document.querySelector('.hero').style.display = 'none';
+    if(document.getElementById(section)) document.getElementById(section).style.display = 'block';
+  }
+}
+
+function showLoginForm(){
+  document.getElementById('login-modal').style.display = 'flex';
+  document.getElementById('login-msg').textContent='';
+}
+function closeLoginForm(){
+  document.getElementById('login-modal').style.display = 'none';
+}
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  if (!u || !p) {
+    document.getElementById('login-msg').textContent = 'Enter username and password.';
+    return;
+  }
+  currentUser = u;
+  document.getElementById('signInBtn').style.display='none';
+  document.getElementById('signOutBtn').style.display='inline-block';
+  closeLoginForm();
+  alert('Welcome, '+u+'!');
+});
+
+function logout(){
+  currentUser = null;
+  document.getElementById('signOutBtn').style.display='none';
+  document.getElementById('signInBtn').style.display='inline-block';
+  alert('Signed out!');
+  navigateTo('home');
+}
+window.onload = function(){
+  navigateTo('home');
+  document.getElementById('signInBtn').style.display = currentUser ? 'none':'inline-block';
+  document.getElementById('signOutBtn').style.display = currentUser ? 'inline-block':'none';
+}
+// Community posts (Anonymous, require sign-in)
+document.getElementById('post-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if(!currentUser) { alert("Sign in first to post!"); return;}
+  const content = document.getElementById('post-content').value.trim();
+  if (!content) return alert('Please share something.');
+  const post = document.createElement('div');
+  post.classList.add('card');
+  post.innerHTML = `<small>Anonymous (${currentUser}) - Now</small><p>${content}</p>`;
+  document.getElementById('posts-list').prepend(post);
+  document.getElementById('post-content').value = '';
+});
+// Mood Journal (require sign-in)
+document.getElementById('journal-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if(!currentUser) { alert("Sign in first to record your mood!"); return;}
+  const content = document.getElementById('journal-content').value.trim();
+  if (!content) return;
+  const entry = document.createElement('div');
+  entry.classList.add('card');
+  entry.innerHTML = `<small>${new Date().toLocaleDateString()} - Mood (${currentUser})</small><p>${content}</p>`;
+  document.getElementById('journal-entries').prepend(entry);
+  document.getElementById('journal-content').value = '';
+});
+// Guided Breathing tool
+let breathing = false;
+const circle = document.getElementById('breathing-circle');
+function startBreathing() {
+  if (breathing) return;
+  breathing = true;
+  cycle();
+}
+function cycle() {
+  if (!breathing) return;
+  circle.textContent = "Breathe In";
+  circle.classList.add("grow");
+  setTimeout(() => {
+    circle.textContent = "Hold";
+    setTimeout(() => {
+      circle.textContent = "Breathe Out";
+      circle.classList.remove("grow");
+      setTimeout(() => {
+        circle.textContent = "Relax";
+        setTimeout(() => cycle(), 1000);
+      }, 6000);
+    }, 3000);
+  }, 4000);
+}
+</script>
+</body>
+</html>

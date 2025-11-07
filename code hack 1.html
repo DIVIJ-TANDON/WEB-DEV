@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeSpace | Mental Health & Support Community</title>
+<style>
+:root {
+  --primary: #5d9e9e;
+  --accent: #ff9f1c;
+  --bg1: #e6f7f7;
+  --bg2: #fef6e4;
+  --text: #333;
+  --card: #fff;
+  --font: 'Poppins', sans-serif;
+}
+
+/* RESET */
+* {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font);
+}
+
+body {
+  background: linear-gradient(120deg, var(--bg1), var(--bg2));
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+  background: var(--card);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  animation: slideDown 0.8s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity:0; }
+  to { transform: translateY(0); opacity:1; }
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: none;
+  transition: 0.3s;
+  animation: float 4s ease-in-out infinite;
+}
+
+.logo:hover { color: var(--accent); }
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+nav a {
+  margin-left: 1rem;
+  padding: .5rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  overflow: hidden;
+  border-bottom: 5px solid var(--accent);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  color: white;
+  z-index: 2;
+  animation: colorShift 8s linear infinite alternate;
+}
+
+.hero p {
+  font-size: 1.4rem;
+  color: #f0f0f0;
+  margin-top: 1rem;
+  z-index: 2;
+  animation: fadeIn 3s ease-out;
+}
+
+@keyframes colorShift {
+  0% { color: #ff9f1c; }
+  25% { color: #00b4d8; }
+  50% { color: #9b5de5; }
+  75% { color: #84c7c7; }
+  100% { color: black; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* MAIN */
+main {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+  text-align: center;
+  animation: fadeIn 1.5s ease;
+}
+
+section {
+  background: var(--card);
+  margin: 1.5rem 0;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.4s;
+}
+section:hover { transform: translateY(-4px); }
+
+section h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* IMAGE CARD */
+.image-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+}
+
+.image-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 6s ease, opacity 1s ease;
+}
+
+.image-card:hover img {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* COMMUNITY */
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  resize: vertical;
+  font-size: 1rem;
+}
+
+.btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover { background: #e68a00; transform: scale(1.05); }
+
+.card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  text-align: left;
+}
+
+/* BREATHING TOOL */
+.breathing-container {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.breathing-circle {
+  width: 150px; height: 150px;
+  margin: 2rem auto;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transition: all 4s ease-in-out;
+  box-shadow: 0 0 25px rgba(93,158,158,0.5);
+}
+
+.breathing-circle.grow {
+  transform: scale(1.5);
+  background: #84c7c7;
+}
+
+/* FOOTER */
+footer {
+  background: #f4f4f4;
+  color: #666;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo" onclick="navigateTo('home');return false;">SafeSpace 🕊️</a>
+  <nav>
+    <a href="#" id="nav-home" class="active" onclick="navigateTo('home');return false;">Home</a>
+    <a href="#" id="nav-community" onclick="navigateTo('community');return false;">Community</a>
+    <a href="#" id="nav-tools" onclick="navigateTo('tools');return false;">Tools</a>
+    <a href="#" id="nav-resources" onclick="navigateTo('resources');return false;">Resources</a>
+  </nav>
+</header>
+
+<section class="hero" id="home

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeSpace | Mental Support & Community</title>
+  <style>
+    :root {
+      --primary: #5d9e9e;
+      --accent: #ff9f1c;
+      --bg1: #e6f7f7;
+      --bg2: #fef6e4;
+      --text: #333;
+      --card: #fff;
+      --font: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; font-family: var(--font);}
+    body {background: linear-gradient(120deg,var(--bg1),var(--bg2));
+      color: var(--text); min-height: 100vh; margin: 0;}
+    header {
+      background: var(--card); display: flex;
+      justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+    .logo { font-size: 1.8rem; font-weight: bold;
+      color: var(--primary); text-decoration: none;}
+    nav a {margin-left: 1rem; padding: .5rem 1rem;
+      text-decoration: none; color: var(--text); border-radius: 6px;}
+    nav a.active, nav a:hover {background: var(--primary); color: white;}
+    .hero {
+      position:relative; height: 70vh;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items:center; text-align:center;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=80') center/cover;
+      border-bottom: 4px solid var(--accent);}
+    .hero::before {content:""; position:absolute; width:100%; height:100%;
+      left:0;top:0; background:rgba(0,0,0,0.45);}
+    .hero h1 {
+      font-size: 3rem; color: white; z-index: 2;
+      animation: colorChange 6s infinite alternate;}
+    @keyframes colorChange {
+      0% { color: #ff9f1c; }
+      25% { color: #00b4d8; }
+      50% { color: #9b5de5; }
+      75% { color: #222; }
+      100% { color: black; }
+    }
+    .hero p {font-size: 1.2rem; margin-top:1rem; color:#fafafa; z-index: 2;}
+    main {max-width:900px; margin:2rem auto; padding: 0 1rem;}
+    section {
+      background: var(--card); padding:2rem; border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08); margin-bottom:2rem;}
+    .image-card img {width:100%; max-height:280px; object-fit:cover; border-radius:12px;}
+    h2 {color:var(--primary);}
+    .btn {background: var(--accent); color: white; border:none;
+      border-radius: 8px; padding:0.75rem 1.2rem; font-weight: bold; cursor:pointer;}
+    .btn:hover {background: #e68a00;}
+    /* Community post list & form */
+    .card {
+      background: #f9f9f9; padding:1rem; border-radius: 10px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.05); margin-bottom:10px;}
+    textarea {width:100%; padding:1rem; border-radius:8px;
+      border:1px solid #ccc; margin-bottom:1rem; resize:vertical;}
+    /* Breathing tool */
+    .breathing-container{text-align:center;}
+    .breathing-circle {
+      width: 150px; height: 150px;
+      margin: 1rem auto;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex; justify-content: center; align-items: center;
+      color: white; font-weight: bold; box-shadow:0 0 25px rgba(93,158,158,0.5);
+      transition: all 4s ease-in-out;}
+    .breathing-circle.grow {transform:scale(1.5); background:#84c7c7;}
+    /* Footer */
+    footer {background: #f4f4f4; color:#666; padding:1rem; text-align:center;}
+    @media (max-width:600px) {.hero h1 {font-size:1.5rem;} .hero{height:32vh;}}
+  </style>
+</head>
+<body>
+<header>
+  <a href="#" class="logo" onclick="navigateTo('home');return false;">SafeSpace 🕊️</a>
+  <nav>
+    <a href="#" id="nav-home" class="active" onclick="navigateTo('home');return false;">Home</a>
+    <a href="#" id="nav-community" onclick="navigateTo('community');return false;">Community</a>
+    <a href="#" id="nav-journaling" onclick="navigateTo('journaling');return false;">Mood Journal</a>
+    <a href="#" id="nav-tools" onclick="navigateTo('tools');return false;">Tools</a>
+    <a href="#" id="nav-resources" onclick="navigateTo('resources');return false;">Resources</a>
+  </nav>
+</header>
+<section class="hero" id="home">
+  <h1>Welcome to SafeSpace</h1>
+  <p>Your calm, caring community for mental wellness 🌸</p>
+</section>
+<main>
+  <!-- Anonymous Community Forum -->
+  <section id="community" style="display:none;">
+    <h2>💬 Community Forum</h2>
+    <div class="image-card"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1400&q=80" alt="Community support"></div>
+    <form id="post-form">
+      <textarea id="post-content" placeholder="Share your message anonymously..." maxlength="400" required></textarea>
+      <button type="submit" class="btn">Post</button>
+    </form>
+    <div id="posts-list">
+      <div class="card"><small>Anonymous - Today</small><p>Feeling grateful for this safe space.</p></div>
+    </div>
+  </section>
+
+  <!-- AI Powered Mood Journal (Stub for Hackathon, can add backend later) -->
+  <section id="journaling" style="display:none;">
+    <h2>📔 Mood Journal</h2>
+    <p>Track your feelings and discover patterns in your mood. (Optional AI Journal Analysis coming soon!)</p>
+    <form id="journal-form">
+      <textarea id="journal-content" placeholder="How are you feeling today?" maxlength="400" required></textarea>
+      <button type="submit" class="btn">Save Mood</button>
+    </form>
+    <div id="journal-entries"></div>
+  </section>
+
+  <!-- Guided breathing tool -->
+  <section id="tools" style="display:none;">
+    <h2>🧘 Guided Breathing</h2>
+    <div class="image-card"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1500&q=80" alt="Meditation"></div>
+    <div class="breathing-container">
+      <div id="breathing-circle" class="breathing-circle">Ready</div>
+      <button class="btn" onclick="startBreathing()">Start</button>
+    </div>
+  </section>
+
+  <!-- Resources and Emergency contacts -->
+  <section id="resources" style="display:none;">
+    <h2>📚 Resources & Emergency Help</h2>
+    <div class="image-card"><img src="https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&w=1500&q=80" alt="Books and help"></div>
+    <ul style="text-align:left; display:inline-block;">
+      <li>📞 <b>988</b> (US Crisis Lifeline)</li>
+      <li>🇮🇳 <b>+91 9999666555</b> (India 24x7 Mental Health Counselling[web:4])</li>
+      <li><a href="https://www.mhanational.org" target="_blank">Mental Health America</a></li>
+      <li><a href="https://www.nami.org" target="_blank">National Alliance on Mental Illness</a></li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>SafeSpace © 2025 | Built for calmness and compassion ✨</p>
+</footer>
+<script>
+function navigateTo(section) {
+  document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('nav-'+section).classList.add('active');
+  if (section === 'home') document.querySelector('.hero').style.display = 'flex';
+  else document.getElementById(section).style.display = 'block';
+}
+navigateTo('home');
+
+// Community posts (Anonymous)
+document.getElementById('post-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const content = document.getElementById('post-content').value.trim();
+  if (!content) return alert('Please share something.');
+  const post = document.createElement('div');
+  post.classList.add('card');
+  post.innerHTML = `<small>Anonymous - Now</small><p>${content}</p>`;
+  document.getElementById('posts-list').prepend(post);
+  document.getElementById('post-content').value = '';
+});
+
+// Mood Journal (Stubbed AI, only frontend)
+document.getElementById('journal-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const content = document.getElementById('journal-content').value.trim();
+  if (!content) return;
+  const entry = document.createElement('div');
+  entry.classList.add('card');
+  entry.innerHTML = `<small>${new Date().toLocaleDateString()} - Mood Entry</small><p>${content}</p>`;
+  document.getElementById('journal-entries').prepend(entry);
+  document.getElementById('journal-content').value = '';
+});
+
+// Guided Breathing tool
+let breathing = false;
+const circle = document.getElementById('breathing-circle');
+function startBreathing() {
+  if (breathing) return;
+  breathing = true;
+  cycle();
+}
+function cycle() {
+  if (!breathing) return;
+  circle.textContent = "Breathe In";
+  circle.classList.add("grow");
+  setTimeout(() => {
+    circle.textContent = "Hold";
+    setTimeout(() => {
+      circle.textContent = "Breathe Out";
+      circle.classList.remove("grow");
+      setTimeout(() => {
+        circle.textContent = "Relax";
+        setTimeout(() => cycle(), 1000);
+      }, 6000);
+    }, 3000);
+  }, 4000);
+}
+</script>
+</body>
+</html>
